@@ -2,17 +2,13 @@ package com.com.werther_client;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.usage.NetworkStatsManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.MalformedURLException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "NullPointerException into SupportBar action!",
                     Toast.LENGTH_SHORT).show();
         }
+
+        User user = new User();
+        Connection connection = new Connection("78.107.248.219:8080",user);
+        try {
+            user.setId(connection.get("getId",null));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(this,user.getId(),Toast.LENGTH_LONG).show();
+
         setContentView(R.layout.activity_main);
     }
 

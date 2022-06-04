@@ -1,9 +1,5 @@
 package com.com.werther_client;
 
-import android.telephony.mbms.MbmsErrors;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class Request {
 
@@ -21,15 +17,12 @@ public class Request {
         return link;
     }
 
-    public Request (String text, String link, String id){
+    public Request (String text, String link){
         this.text=text;
         this.link=link;
-        this.id=id;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() {return id;}
 
     public void setId(String id) {
         this.id = id;
