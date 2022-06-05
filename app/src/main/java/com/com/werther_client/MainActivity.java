@@ -1,14 +1,15 @@
 package com.com.werther_client;
 
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.usage.NetworkStatsManager;
-import android.os.Bundle;
-import android.widget.Toast;
+import com.com.werther_client.connections.InputConnection;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,15 +26,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         User user = new User();
-        Connection connection = new Connection("78.107.248.219:8080",user);
-        try {
-            user.setId(connection.get("getId",null));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        Toast.makeText(this,user.getId(),Toast.LENGTH_LONG).show();
+        Thread connection = new Thread(new InputConnection(user,"getId",null));//String ipAddress, User user, String operationName, String requestId
+        connection.start();
+        TextView request_text_label = (TextView) findViewById(R.id.request_text_label);
+        request_text_label.setText("lol");
+        request_text_label.setText(user.getId());
 
         setContentView(R.layout.activity_main);
+
     }
 
     private String readFile(String fileName) {

@@ -28,7 +28,7 @@ public class Request {
         this.id = id;
     }
 
-    public void addText (String text){
+    public void setText (String text){
     this.text = text;
     }
 
