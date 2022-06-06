@@ -1,7 +1,6 @@
 package com.com.werther_client;
 
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,14 +25,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         User user = new User();
-        Thread connection = new Thread(new InputConnection(user,"getId",null));//String ipAddress, User user, String operationName, String requestId
-        connection.start();
-        TextView request_text_label = (TextView) findViewById(R.id.request_text_label);
-        request_text_label.setText("lol");
-        request_text_label.setText(user.getId());
+
+        Thread inputConnection = new Thread(new InputConnection(user,"getId"));
+        inputConnection.start();
+        try {
+            inputConnection.join();
+        } catch (InterruptedException e) {
+            user.setId("0");
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        } finally {
+            inputConnection.interrupt();
+        }
+
+
 
         setContentView(R.layout.activity_main);
-
+        Toast.makeText(this, "NullPointerException into SupportBar action!",
+                Toast.LENGTH_SHORT).show();
     }
 
     private String readFile(String fileName) {

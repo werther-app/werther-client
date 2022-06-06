@@ -3,7 +3,7 @@ package com.com.werther_client.connections;
 import com.com.werther_client.Request;
 import com.com.werther_client.User;
 
-public abstract class Connection implements Runnable {
+public abstract class Connection {
 
     private User user;
 
@@ -14,7 +14,7 @@ public abstract class Connection implements Runnable {
         this.request = request;
     }
 
+    public Connection(User user) {
+    }
 
-    @Override
-    public void run() {}
 }

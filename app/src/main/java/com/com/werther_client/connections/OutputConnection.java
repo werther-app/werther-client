@@ -5,7 +5,19 @@ import com.com.werther_client.User;
 
 public class OutputConnection extends Connection implements Runnable{
 
-    public OutputConnection(User user, Request request) {
-        super(user, request);
+    private String link;
+
+    public OutputConnection(User user, Request request, String link) {
+        super(user,request);
+
+
+    }
+    public void post (String link){
+
+    }
+
+    @Override
+    public void run() {
+
     }
 }

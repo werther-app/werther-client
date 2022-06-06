@@ -20,11 +20,7 @@ public class InputConnection extends Connection implements Runnable {
     private User user;
     private Request request;
 
-
     private static HashMap <String, String> operations = new HashMap<>();
-    public String getOperation(String operationName){
-        return null;
-    }
 
     public InputConnection(User user, String operationName, Request request){
         super(user, request);
@@ -32,6 +28,15 @@ public class InputConnection extends Connection implements Runnable {
         operations.put("getId", "/auth?type=client");
         operations.put("getOrder", "/result?order=");
         operations.put("postOrder","/order?video=");
+        this.user=user;
+        this.request=request;
+    }
+
+    public InputConnection(User user, String operationName){
+        super(user);
+        this.operationName=operationName;
+        operations.put("getId", "/auth?type=client");
+        operations.put("getOrder", "/result?order=");
         this.user=user;
     }
 
@@ -60,7 +65,7 @@ public class InputConnection extends Connection implements Runnable {
     }
 
     public String get(String operationName)throws MalformedURLException{
-        User user = new User();
+        String income="";
         URL url = null;
         url = new URL(protocol+"://"+source+":"+port + operations.get(operationName));
         try {
@@ -72,29 +77,25 @@ public class InputConnection extends Connection implements Runnable {
 
                 StringBuilder output = new StringBuilder(bufferedReader.readLine());
 
-                User user1 = new User(output.toString());
-                return user1.getId();
+                income = output.toString();
+                return income;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            return user.getId();
+            income=e.toString();
+            return income;
         }
 
-        return user.getId();
-    }
-
-    public void post(String operationName, String link){
-
+        return income;
     }
 
 
     @Override
     public void run() {
         try {
-            if (user.getId()==null)
-                user.setId(get(this.operationName));
+            if (this.operationName == "getId")
+                this.user.setId(get(this.operationName));
             else
-                request.setText(get(this.operationName, request));
+                this.request.setText(get(this.operationName, this.request));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
