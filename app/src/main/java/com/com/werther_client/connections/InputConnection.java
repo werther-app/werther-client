@@ -27,7 +27,6 @@ public class InputConnection extends Connection implements Runnable {
         this.operationName=operationName;
         operations.put("getId", "/auth?type=client");
         operations.put("getOrder", "/result?order=");
-        operations.put("postOrder","/order?video=");
         this.user=user;
         this.request=request;
     }
@@ -40,7 +39,7 @@ public class InputConnection extends Connection implements Runnable {
         this.user=user;
     }
 
-    //Use for all requests
+
     public String get(String operationName, Request request) throws MalformedURLException {
         URL url = null;
             url = new URL(protocol+"://"+source+":"+port + operations.get(operationName)+
@@ -55,17 +54,25 @@ public class InputConnection extends Connection implements Runnable {
                 StringBuilder output = new StringBuilder(bufferedReader.readLine());
                 output.append(bufferedReader.readLine()).append("/n");
 
+                request.setStatus("Done!");
                 return output.toString();
+            }
+            if(httpURLConnection.getResponseCode()==203){
+                request.setStatus("In progress!");
+                return "Try to get it later";
+            }
+
+            else{
+                request.setStatus("Can't be done!");
+                return "Server Error";
             }
         } catch (IOException e) {
             e.printStackTrace();
             return e.toString();
         }
-        return null;
     }
 
     public String get(String operationName)throws MalformedURLException{
-        String income="";
         URL url = null;
         url = new URL(protocol+"://"+source+":"+port + operations.get(operationName));
         try {
@@ -77,15 +84,12 @@ public class InputConnection extends Connection implements Runnable {
 
                 StringBuilder output = new StringBuilder(bufferedReader.readLine());
 
-                income = output.toString();
-                return income;
+                return output.toString();
             }
         } catch (IOException e) {
-            income=e.toString();
-            return income;
+            return "";
         }
-
-        return income;
+        return "";
     }
 
 
