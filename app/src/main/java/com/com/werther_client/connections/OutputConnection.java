@@ -1,5 +1,7 @@
 package com.com.werther_client.connections;
 
+import android.content.Context;
+
 import com.com.werther_client.Request;
 import com.com.werther_client.User;
 
@@ -7,8 +9,8 @@ public class OutputConnection extends Connection implements Runnable{
 
     private String link;
 
-    public OutputConnection(User user, Request request, String link) {
-        super(user,request);
+    public OutputConnection(Context context, User user, Request request) {
+        super(context,user,request);
 
 
     }

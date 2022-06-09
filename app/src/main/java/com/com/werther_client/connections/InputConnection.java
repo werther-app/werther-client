@@ -1,5 +1,8 @@
 package com.com.werther_client.connections;
 
+import android.content.Context;
+
+import com.com.werther_client.ConfigReader;
 import com.com.werther_client.Request;
 import com.com.werther_client.User;
 
@@ -13,36 +16,41 @@ import java.net.URL;
 import java.util.HashMap;
 
 public class InputConnection extends Connection implements Runnable {
-    private String protocol="http"; //TODO Remove HARDCODE
-    private String source="78.107.248.219";//TODO Remove HARDCODE
-    private String port="8080";//TODO Remove HARDCODE
     private String operationName;
     private User user;
     private Request request;
 
     private static HashMap <String, String> operations = new HashMap<>();
 
-    public InputConnection(User user, String operationName, Request request){
-        super(user, request);
+    public InputConnection (Context context, User user, String operationName, Request request){
+        super(context, user, request);
         this.operationName=operationName;
         operations.put("getId", "/auth?type=client");
         operations.put("getOrder", "/result?order=");
         this.user=user;
         this.request=request;
+        server_protocol =ConfigReader.getConfigValue(context,"server_protocol");
+        server_source=ConfigReader.getConfigValue(context,"server_source");
+        server_port=ConfigReader.getConfigValue(context,"server_port");
+
     }
 
-    public InputConnection(User user, String operationName){
-        super(user);
+    public InputConnection(Context context, User user, String operationName){
+        super(user, context);
         this.operationName=operationName;
         operations.put("getId", "/auth?type=client");
         operations.put("getOrder", "/result?order=");
         this.user=user;
+        server_protocol =ConfigReader.getConfigValue(context,"server_protocol");
+        server_source=ConfigReader.getConfigValue(context,"server_source");
+        server_port=ConfigReader.getConfigValue(context,"server_port");
+
     }
 
 
     public String get(String operationName, Request request) throws MalformedURLException {
         URL url = null;
-            url = new URL(protocol+"://"+source+":"+port + operations.get(operationName)+
+            url = new URL(server_protocol +"://"+ server_source +":"+ server_port + operations.get(operationName)+
                     user.getId()+"&"+request.getId());
         try {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -74,7 +82,7 @@ public class InputConnection extends Connection implements Runnable {
 
     public String get(String operationName)throws MalformedURLException{
         URL url = null;
-        url = new URL(protocol+"://"+source+":"+port + operations.get(operationName));
+        url = new URL(server_protocol +"://"+ server_source +":"+ server_port + operations.get(operationName));
         try {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
