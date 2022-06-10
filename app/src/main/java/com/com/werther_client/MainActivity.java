@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
             //Hide keyboard after unfocus editText
             InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+            //Remove text from textEdit
+            url_Enter_textBox.setText("");
             if(request.getId()!=null)
                 Toast.makeText(this, "You sucessfully sended your link\n" + request.getId() + "\nid - link", Toast.LENGTH_SHORT).show();
             else
