@@ -42,15 +42,17 @@ public class MainActivity extends AppCompatActivity {
         if (user.getId()==null)
             getId();
     }
-
+    //Home button push method
     @Override
     protected void onUserLeaveHint(){
+        super.onUserLeaveHint();
         save();
         Toast.makeText(this, "WORK", Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onDestroy(){
+        super.onDestroy();
         save();
     }
 
