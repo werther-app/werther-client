@@ -18,7 +18,7 @@ import com.com.werther_client.connections.OutputConnection;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-
+//Class of main activity used to make input connection and set id to new user.
 public class MainActivity extends AppCompatActivity {
 
     EditText url_Enter_textBox;

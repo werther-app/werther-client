@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+//This class used to read configuration file: build config.
 public class ConfigReader {
     private static final String TAG = "ConfigReader";
 
