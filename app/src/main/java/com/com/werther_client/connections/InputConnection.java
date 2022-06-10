@@ -49,7 +49,7 @@ public class InputConnection extends Connection implements Runnable {
 
 
     public String get(String operationName, Request request) throws MalformedURLException {
-        URL url = null;
+        URL url;
             url = new URL(server_protocol +"://"+ server_source +":"+ server_port + operations.get(operationName)+
                     user.getId()+"&"+request.getId());
         try {
@@ -90,9 +90,7 @@ public class InputConnection extends Connection implements Runnable {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-                StringBuilder input = new StringBuilder(bufferedReader.readLine());
-
-                return input.toString();
+                return bufferedReader.readLine();
             }
             httpURLConnection.disconnect();
         } catch (IOException e) {
@@ -101,11 +99,10 @@ public class InputConnection extends Connection implements Runnable {
         return "";
     }
 
-
     @Override
     public void run() {
         try {
-            if (this.operationName == "getId")
+            if (this.operationName.equals("getId"))
                 this.user.setId(get(this.operationName));
             else
                 this.request.setText(get(this.operationName, this.request));

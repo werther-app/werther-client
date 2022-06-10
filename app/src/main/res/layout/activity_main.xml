@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:alpha=".80"
                 android:backgroundTint="@color/action_elements_color"
-                android:onClick="test"
+                android:onClick="post"
                 android:text="@string/url_enter_button"
                 android:textColor="@color/background_color"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -15,8 +15,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 public class OutputConnection extends Connection implements Runnable{
 
@@ -38,11 +36,10 @@ public class OutputConnection extends Connection implements Runnable{
     private String post (String link){
         String answer = null;
 
-        Map<String,String> postBody = new HashMap<>();
 
-        URL url=null;
-        HttpURLConnection httpURLConnection=null;
-        OutputStream outputStream=null;
+        URL url;
+        HttpURLConnection httpURLConnection;
+        OutputStream outputStream;
         InputStreamReader inputStreamReader=null;
         BufferedReader buffer=null;
 
