@@ -1,28 +1,23 @@
 package com.com.werther_client;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
+
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.com.werther_client.connections.InputConnection;
 import com.com.werther_client.connections.OutputConnection;
-import com.google.gson.Gson;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
