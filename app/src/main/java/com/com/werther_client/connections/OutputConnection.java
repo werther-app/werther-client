@@ -8,11 +8,13 @@ import com.com.werther_client.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +36,7 @@ public class OutputConnection extends Connection implements Runnable{
         server_port=ConfigReader.getConfigValue(context,"server_port");
     }
     private String post (String link){
-        StringBuilder answer=new StringBuilder();
+        String answer = null;
 
         Map<String,String> postBody = new HashMap<>();
 
@@ -45,10 +47,8 @@ public class OutputConnection extends Connection implements Runnable{
         BufferedReader buffer=null;
 
         try{
-            postBody.put("link", link);
-            postBody.put("id", user.getId());
-
-            byte [] output = postBody.toString().getBytes();
+            String urlParameters = "link="+link+"&id="+user.getId();
+            byte[] output = urlParameters.getBytes(StandardCharsets.UTF_8);
 
             url=new URL(server_protocol+"://"+server_source+":"+server_port+"/order");
             httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -67,30 +67,32 @@ public class OutputConnection extends Connection implements Runnable{
                 return null;
             }
 
-            Integer status = httpURLConnection.getResponseCode();
 
             if(httpURLConnection.getResponseCode()==200){
-                request.setStatus("READY");
-                inputStreamReader=new InputStreamReader(httpURLConnection.getInputStream());
-                buffer=new BufferedReader(inputStreamReader);
-                while (buffer.readLine()!=null)
-                    answer.append(buffer);
+                request.setStatus("SEND");
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                StringBuilder input = new StringBuilder(bufferedReader.readLine());
+
+                return input.toString();
             }
             else
-                request.setStatus("Error");
+                request.setStatus("ERROR");
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return e.getMessage();
         } catch (IOException e) {
             return e.getMessage();
         }
-        return answer.toString();
+        httpURLConnection.disconnect();
+        return answer;
     }
 
     @Override
     public void run() {
         post(link);
-        if (request.getStatus()=="READY")
+        if (request.getStatus().equals("SEND"))
             request.setId(post(link));
     }
 }

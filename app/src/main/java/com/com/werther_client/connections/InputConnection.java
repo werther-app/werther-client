@@ -90,10 +90,11 @@ public class InputConnection extends Connection implements Runnable {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-                StringBuilder output = new StringBuilder(bufferedReader.readLine());
+                StringBuilder input = new StringBuilder(bufferedReader.readLine());
 
-                return output.toString();
+                return input.toString();
             }
+            httpURLConnection.disconnect();
         } catch (IOException e) {
             return "";
         }
