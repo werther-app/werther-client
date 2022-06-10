@@ -2,7 +2,7 @@ package com.com.werther_client.connections;
 
 import android.content.Context;
 
-import com.com.werther_client.Request;
+import com.com.werther_client.requests.Request;
 import com.com.werther_client.User;
 
 public abstract class Connection {

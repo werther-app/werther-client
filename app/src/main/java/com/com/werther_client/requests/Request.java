@@ -1,4 +1,4 @@
-package com.com.werther_client;
+package com.com.werther_client.requests;
 
 public class Request {
 
@@ -10,10 +10,6 @@ public class Request {
 
 
     private String status;
-
-    public String getText() {
-        return text;
-    }
 
     public String getLink() {
         return link;
@@ -29,8 +25,6 @@ public class Request {
     public void setId(String id) {
         this.id = id;
     }
-
-    public void setLink(String link) {this.link = link;}
 
     public void setText (String text){
     this.text = text;

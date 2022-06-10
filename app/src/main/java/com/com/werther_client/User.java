@@ -1,6 +1,7 @@
 package com.com.werther_client;
 
 
+import com.com.werther_client.requests.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,6 +31,14 @@ public class User {
 
     public void setList(ArrayList list) {
         this.list = list;
+    }
+
+    public Request getFromList(int count){
+        return (Request) list.get(count);
+    }
+
+    public int getListSize(){
+        return list.size();
     }
 
     private ArrayList list = new ArrayList<Request>();

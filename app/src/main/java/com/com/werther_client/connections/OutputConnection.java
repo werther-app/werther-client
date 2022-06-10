@@ -3,7 +3,7 @@ package com.com.werther_client.connections;
 import android.content.Context;
 
 import com.com.werther_client.ConfigReader;
-import com.com.werther_client.Request;
+import com.com.werther_client.requests.Request;
 import com.com.werther_client.User;
 
 import java.io.BufferedReader;
@@ -36,7 +36,6 @@ public class OutputConnection extends Connection implements Runnable{
     private String post (String link){
         String answer = null;
 
-
         URL url;
         HttpURLConnection httpURLConnection;
         OutputStream outputStream;
@@ -63,8 +62,7 @@ public class OutputConnection extends Connection implements Runnable{
             catch (IOException e){
                 return null;
             }
-
-
+            //200 status check
             if(httpURLConnection.getResponseCode()==200){
                 request.setStatus("SEND");
                 InputStream inputStream = httpURLConnection.getInputStream();
@@ -88,8 +86,8 @@ public class OutputConnection extends Connection implements Runnable{
 
     @Override
     public void run() {
-        post(link);
+        String id = post(link);
         if (request.getStatus().equals("SEND"))
-            request.setId(post(link));
+            request.setId(id);
     }
 }

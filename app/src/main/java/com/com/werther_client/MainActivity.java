@@ -1,34 +1,30 @@
 package com.com.werther_client;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.com.werther_client.connections.InputConnection;
 import com.com.werther_client.connections.OutputConnection;
-import com.google.gson.Gson;
+import com.com.werther_client.requests.Request;
+import com.com.werther_client.requests.RequestAdapter;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText url_Enter_textBox;
-    User user = new User();
+    private EditText url_Enter_textBox;
+    private RequestAdapter requestAdapter;
+    private User user = new User();
 
+    private RecyclerView rv_requests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +37,24 @@ public class MainActivity extends AppCompatActivity {
             user.setList(new ArrayList());
         if (user.getId()==null)
             getId();
+
+        rv_requests = findViewById(R.id.rv_requests);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rv_requests.setLayoutManager(layoutManager);
+
+        requestAdapter = new RequestAdapter(user);
+        rv_requests.setAdapter(requestAdapter);
     }
 
     @Override
     protected void onUserLeaveHint(){
+        super.onUserLeaveHint();
         save();
-        Toast.makeText(this, "WORK", Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onDestroy(){
+        super.onDestroy();
         save();
     }
 
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         String id = sharedPreferences.getString("id", null);
         user.convertStringToList(json);
         user.setId(id);
+        Toast.makeText(this, "WELCOME BACK\n"+user.getId(), Toast.LENGTH_SHORT).show();
     }
 
     public void getId(){
@@ -102,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         finally {
             outputConnection.interrupt();
             user.addToTheList(request);
+            if(request.getId()!=null)
+                Toast.makeText(this, "You sucessfully sended your link\n" + request.getId() + "\nid - link", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Oooopss! Something goes wrong", Toast.LENGTH_SHORT).show();
         }
 
     }
