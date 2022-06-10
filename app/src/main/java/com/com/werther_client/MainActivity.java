@@ -1,9 +1,11 @@
 package com.com.werther_client;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private User user = new User();
 
     private RecyclerView rv_requests;
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +41,7 @@ public class MainActivity extends AppCompatActivity {
         if (user.getId()==null)
             getId();
 
-        rv_requests = findViewById(R.id.rv_requests);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rv_requests.setLayoutManager(layoutManager);
-
-        requestAdapter = new RequestAdapter(user);
-        rv_requests.setAdapter(requestAdapter);
+        changeAdapter();
     }
 
     @Override
@@ -56,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         save();
+    }
+
+    private void changeAdapter(){
+        rv_requests = findViewById(R.id.rv_requests);
+        rv_requests.setLayoutManager(layoutManager);
+
+        requestAdapter = new RequestAdapter(getApplicationContext(),user);
+        rv_requests.setAdapter(requestAdapter);
     }
 
     private void save(){
@@ -107,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
         finally {
             outputConnection.interrupt();
             user.addToTheList(request);
+            //Renew adater
+            requestAdapter.notifyItemInserted(user.getListSize()-1);
+            //Hide keyboard after unfocus editText
+            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
             if(request.getId()!=null)
                 Toast.makeText(this, "You sucessfully sended your link\n" + request.getId() + "\nid - link", Toast.LENGTH_SHORT).show();
             else

@@ -60,6 +60,10 @@ public class InputConnection extends Connection implements Runnable {
 
                 return bufferedReader.readLine();
             }
+            if (httpURLConnection.getResponseCode()==404){
+                request.setStatus("RESULT NOT FOUND");
+            }
+
             httpURLConnection.disconnect();
         } catch (IOException e) {
             return "";
