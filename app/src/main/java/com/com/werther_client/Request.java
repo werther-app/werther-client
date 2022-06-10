@@ -1,6 +1,5 @@
 package com.com.werther_client;
 
-
 public class Request {
 
     private String text;
