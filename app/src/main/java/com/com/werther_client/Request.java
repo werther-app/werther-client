@@ -7,7 +7,7 @@ public class Request {
 
     private String id;
 
-    private final String link;
+    private String link;
 
 
     private String status;
@@ -30,6 +30,8 @@ public class Request {
     public void setId(String id) {
         this.id = id;
     }
+
+    public void setLink(String link) {this.link = link;}
 
     public void setText (String text){
     this.text = text;
