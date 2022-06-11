@@ -4,6 +4,7 @@
     <string name="url_hint_text">Enter Here Your URL</string>
     <string name="url_enter_button">Send to the Server ✓</string>//must be edit
     <string name="request_block_label">Your Requests:</string>
+    <string name="get_button">Get!</string>
     //for exceptions txt
     <string name="supportBar_exception">NullPointerException into SupportBar action!</string>
 </resources>
