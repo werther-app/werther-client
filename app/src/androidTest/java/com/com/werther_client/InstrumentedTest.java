@@ -69,31 +69,31 @@ public class InstrumentedTest {
         }
     }
 
-    @Test
-    public void checkWerther() throws Exception{
-        URL url = new URL("https://werther.tech/");
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("GET");
-        if (httpURLConnection.getResponseCode()==200)
-            System.out.print("all right");
-        else
-            throw new IOException(httpURLConnection.getResponseMessage());
-    }
-
-    @Test
-    public void checkWertherConfig()throws Exception{
-        URL url = new URL("https://werther.tech/status.html");
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("GET");
-        if(httpURLConnection.getResponseCode()==200){
-            InputStream inputStream = httpURLConnection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String str = bufferedReader.readLine();
-            if (str != null && str.equals("<!DOCTYPE html>"))
-                System.out.print("all right");
-            else
-                throw new IOException(str);
-        }
-        else throw new IOException(String.valueOf(httpURLConnection.getResponseCode()));
-    }
+//    @Test
+//    public void checkWerther() throws Exception{
+//        URL url = new URL("https://werther.tech/");
+//        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+//        httpURLConnection.setRequestMethod("GET");
+//        if (httpURLConnection.getResponseCode()==200)
+//            System.out.print("all right");
+//        else
+//            throw new IOException(httpURLConnection.getResponseMessage());
+//    }
+//
+//    @Test
+//    public void checkWertherConfig()throws Exception{
+//        URL url = new URL("https://werther.tech/status.html");
+//        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+//        httpURLConnection.setRequestMethod("GET");
+//        if(httpURLConnection.getResponseCode()==200){
+//            InputStream inputStream = httpURLConnection.getInputStream();
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+//            String str = bufferedReader.readLine();
+//            if (str != null && str.equals("<!DOCTYPE html>"))
+//                System.out.print("all right");
+//            else
+//                throw new IOException(str);
+//        }
+//        else throw new IOException(String.valueOf(httpURLConnection.getResponseCode()));
+//    }
 }
