@@ -23,8 +23,6 @@
 
     <Button
         android:id="@+id/request_get_button"
-        android:backgroundTint="@color/action_elements_color"
-        android:textColor="@color/background_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|end"

@@ -13,18 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.com.werther_client.R;
 import com.com.werther_client.User;
-import com.com.werther_client.connections.InputConnection;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestViewHolder>{
 
     private User user;
     private int viewHolderNumber;
-    private Context context;
 
-    public RequestAdapter(Context context,User user){
+    public RequestAdapter(User user){
         this.user=user;
         viewHolderNumber=0;
-        this.context=context;
     }
 
     @Override
@@ -71,22 +68,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
             listItemRequestBody = itemView.findViewById(R.id.request_body);
             listItemRequestButton = itemView.findViewById(R.id.request_get_button);
 
-            listItemRequestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Thread inputConnection = new Thread(new InputConnection(context, user,"getOrder", user.getFromList(getAdapterPosition())));
-                    inputConnection.start();
-                    try {
-                        inputConnection.join();
-                    } catch (InterruptedException e) {
-                        listItemRequestButton.setText("TRY AGAIN LATER!");
-                    } finally {
-                        inputConnection.interrupt();
-                        if (!user.getFromList(getAdapterPosition()).getStatus().equals("DONE"))
-                            listItemRequestButton.setText("TRY AGAIN LATER!");
-                    }
-                }
-            });
         }
 
         void bind (int listId){
